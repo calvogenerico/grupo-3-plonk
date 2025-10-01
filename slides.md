@@ -45,11 +45,11 @@ The last comment block of each slide will be treated as slide notes. It will be 
 
 
 ---
-src: ./pages/bruno.md
+src: ./pages/migue.md
 ---
 
 ---
-src: ./pages/aylen.md
+src: ./pages/bruno.md
 ---
 
 ---
@@ -57,7 +57,7 @@ src: ./pages/ax.md
 ---
 
 ---
-src: ./pages/migue.md
+src: ./pages/aylen.md
 ---
 
 
