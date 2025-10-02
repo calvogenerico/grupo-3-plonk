@@ -229,6 +229,12 @@ transition: slide-left
 _En realidad a mi me gusta hablar de compiladores y esto es lo mas parecido que encontré_
 
 
+<!-- 
+Ahora que sabemos esconder cosas en polinomios, si pudieramos generar
+la traza de nuestro de una problema de una manera estable, podríámos
+meterla en un polinomio, mostrar que tenemos el polinomio y todo joya.
+-->
+
 ---
 layout: two-cols
 transition: none
@@ -308,6 +314,8 @@ Cada rombito es un "gate".
 
 Las "gates" son operaciones que toman 2 inputs y un output.
 
+Un output puede ir a tantas gates como quiera. Pero cada gate recibe solo 2 entradas.
+
 ::right::
 
 # Circuito
@@ -338,8 +346,386 @@ graph TD
 
 
 ---
-layout: default
+layout: two-cols-header
 transition: slide-left
 ---
 
+
+
 # Plonk gates
+
+::left::
+
+```mermaid {alt: 'Plonk gate'}
+graph TD
+    A:::aa -->|in_a|GATE{gate};
+    B:::aa -->|in_b|GATE;
+    GATE -->|out| C:::aa
+    
+
+    classDef aa opacity: 0;
+```
+
+::right::
+
+<v-clicks>
+
+- En cada "gate" se hace 1 operación.
+- Medio que nuestro circuito es una lista de gates, y cada Con lo cual podríamos llamar:
+    - $a_i$ a la primera entrada de la gate número $i$.
+    - $b_i$ a la segunda entrada de la gate número $i$.
+    - $c_i$ a salida de la gate número $i$.
+- En plonk, entonces cada gate hace una operación con esta forma:
+- $(Q_{L_i}) a_i + (Q_{R_i}) b_i + (Q_{O_i}) c_i + (Q_{M_i}) a_i b_i + Q_{C_i} = 0$
+
+</v-clicks>
+
+
+---
+layout: fact
+---
+
+$(Q_{L_i}) a_i + (Q_{R_i}) b_i + (Q_{O_i}) c_i + (Q_{M_i}) a_i b_i + Q_{C_i} = 0$
+
+
+<!--
+Esto se ve muy limitante, pero si lo miramos con un poco de amor... Es bastaaante poderoso.
+-->
+
+---
+layout: default
+---
+
+# Circuito formado por gates
+
+Recordemos que el circuito en el fondo termina siendo un montón de gates. Y cada gate medio que son 5 numeritos.
+ Con lo cual nuestro programa medio que es una matriz que se ve mas o menos así:
+
+<PlonkMatrix :matrix-data="[[1,0,-1,0,0], [1,1,-1,0,0], [0,0,-1,1,0]]" />
+
+---
+layout: two-cols-header
+---
+
+# Como se usa esta cosa
+
+> ¿Podremos realmente hacer cualquier circuitos para cualquier programa?
+
+$(Q_{L_i}) a_i + (Q_{R_i}) b_i + (Q_{O_i}) c_i + (Q_{M_i}) a_i b_i + Q_{C_i} = 0$
+
+## suma
+
+::left::
+
+$a + b = c$
+
+::right::
+
+- $Q_L=1$
+- $Q_R=1$
+- $Q_O=-1$
+
+
+````md magic-move {lines: true}
+```ts {*}
+```
+
+```ts {*}
+Q_l * a + Q_r * b + Q_o * c + Q_m a * b + Q_c === 0
+```
+
+```ts {*}
+1 * a + 1 * b + (-1) * c + 0 * a * b + 0 === 0
+```
+
+```ts {*}
+a + b - c === 0
+```
+
+```ts {*}
+a + b === c
+```
+````
+
+<!--
+Empieza a cobrar sentido. Veamos otra operación.
+-->
+
+
+---
+layout: default
+---
+
+# Circuito formado por gates
+
+Recordemos que el circuito en el fondo termina siendo un montón de gates. Y cada gate medio que son 5 numeritos.
+ Con lo cual nuestro programa medio que es una matriz que se ve mas o menos así:
+
+<PlonkMatrix :matrix-data="[[1,0,-1,0,0], [1,1,-1,0,0], [0,0,-1,1,0]]" />
+
+---
+layout: two-cols-header
+---
+
+# Como se usa esta cosa
+
+> ¿Podremos realmente hacer cualquier circuitos para cualquier programa?
+
+$(Q_{L_i}) a_i + (Q_{R_i}) b_i + (Q_{O_i}) c_i + (Q_{M_i}) a_i b_i + Q_{C_i} = 0$
+
+## producto
+
+::left::
+
+$a * b = c$
+
+::right::
+
+- $Q_M=1$
+- $Q_O=-1$
+
+
+````md magic-move {lines: true}
+```ts {*}
+```
+
+```ts {*}
+Q_l * a + Q_r * b + Q_o * c + Q_m a * b + Q_c === 0
+```
+
+```ts {*}
+0 * a + 0 * b + (-1) * c + 1 * a * b + 0 === 0
+```
+
+```ts {*}
+- c + a * b === 0
+```
+
+```ts {*}
+a * b === c
+```
+````
+
+<!--
+Ok esto anda. Sigamos
+-->
+
+
+---
+layout: two-cols-header
+---
+
+# Como se usa esta cosa
+
+> ¿Podremos realmente hacer cualquier circuitos para cualquier programa?
+
+$(Q_{L_i}) a_i + (Q_{R_i}) b_i + (Q_{O_i}) c_i + (Q_{M_i}) a_i b_i + Q_{C_i} = 0$
+
+## booleanos
+
+::left::
+
+``` ts
+a === true || a === false
+
+```
+
+::right::
+
+Vamos a representar a `true` como `1` y a `false` como `0`.
+
+<PlonkMatrix :matrix-data="[
+    [1, 0, -1, 0, -1],
+    [0, 0,  0, 1,  0]
+]" :traza="[
+    ['i', '_', 'i1'],
+    ['i1', 'i', '_']
+]"/>
+
+
+````md magic-move {lines: true}
+```ts {*}
+```
+
+```ts {*}
+// gate 1
+Q_l * a + Q_r * b + Q_o * c + Q_m * a * b + Q_c === 0
+```
+
+```ts {*}
+// gate 1
+1 * a + 0 * b + (-1) * c + 0 * a * b + (-1) === 0
+```
+
+```ts {*}
+// gate 1
+a - c - 1 === 0
+```
+
+```ts {*}
+// gate 1
+a - 1 === c
+```
+
+```ts {*}
+// gate 2
+Q_l * a + Q_r * b + Q_o * c + Q_m * a * b + Q_c === 0
+```
+
+```ts {*}
+// gate 2
+0 * a + 0 * b + 0 * c + 1 * a * b + 0 === 0
+```
+
+```ts {*}
+// gate 2
+a * b === 0
+```
+
+```ts {*}
+// gate 2
+a * b === 0
+```
+
+```ts {*}
+// es decir....
+assert(input * (input - 1) === 0);
+// ¿Que números cumplen eso?
+
+```
+
+````
+
+
+<!--
+O sea que acá tenemos una especie de puerta compuesta
+que detecta si algo es un booleano. Vamos con el último.
+-->
+
+---
+layout: two-cols-header
+---
+
+# Como se usa esta cosa
+
+> ¿Podremos realmente hacer cualquier circuitos para cualquier programa?
+
+$(Q_{L_i}) a_i + (Q_{R_i}) b_i + (Q_{O_i}) c_i + (Q_{M_i}) a_i b_i + Q_{C_i} = 0$
+
+## if then
+
+::left::
+
+````md magic-move {lines: true}
+```rust {*|2|4|6|9}
+// Esto es rust muy poco idiomático!
+fn gate(b: bool) -> usize {
+    let res = if b {
+        10
+    } else {
+        55
+    };
+
+    return res;
+}
+```
+````
+
+
+::right::
+
+<PlonkMatrix :matrix-data="[
+    [1, 0, -1, 0, -1], // 1
+    [0, 0,  0, 1,  0], // 2
+    [0, 0,  -1, 0,  10], // 3
+    [0, 0,  -1, 0,  55], // 4
+    [0, 0,  -1, 1,  0], //  5
+    [0, 0,  -1, 1,  0], // 6
+    [1, 1,  -1, 0,  0] // 7
+]" :traza="[
+    ['b' , '', 'b1'], // 1
+    ['b1', 'b', '' ], // 2
+    [''  , '' , 'x1'], // 3
+    [''  , '' , 'x2'], // 4
+    ['x1', 'b', 'x3'], // 5
+    ['x2', 'b', 'x4'], // 6
+    ['x3', 'x4', 'out'], // 7
+]" :nombres="[
+    'booleano1',
+    'booleano2',
+    'constante',
+    'constante',
+    'then',
+    'else',
+    'if / then / else'
+]"/>
+
+
+---
+layout: default
+transition: none
+---
+
+# Entonces...
+
+Tenemos una re matriz:
+
+<PlonkMatrix :matrix-data="[
+    [1, 0, -1, 0, -1], // 1
+    [0, 0,  0, 1,  0], // 2
+    [0, 0,  -1, 0,  10], // 3
+    [0, 0,  -1, 0,  55], // 4
+    [0, 0,  -1, 1,  0], //  5
+    [0, 0,  -1, 1,  0], // 6
+    [1, 1,  -1, 0,  0] // 7
+]" :traza="[
+    ['b' , '', 'b1'], // 1
+    ['b1', 'b', '' ], // 2
+    [''  , '' , 'x1'], // 3
+    [''  , '' , 'x2'], // 4
+    ['x1', 'b', 'x3'], // 5
+    ['x2', 'b', 'x4'], // 6
+    ['x3', 'x4', 'out'], // 7
+]" :nombres="[
+    'booleano1',
+    'booleano2',
+    'constante',
+    'constante',
+    'then',
+    'else',
+    'if / then / else'
+]"/>
+
+---
+layout: default
+transition: none
+---
+
+# Entonces...
+
+Esa re matriz la podemos convertir en varios polinomios.
+Lo que hace plonk es agarrar cada columna y volverla un polinomio usando
+la magia de interpolar.
+
+- $Q_L(x) = \langle [1, \omega, \omega^2, ..., \omega^i], [Q_{L_0}, Q_{L_1}, Q_{L_2}, ..., Q_{L_i}] \rangle$
+- $Q_R(x) = \langle [1, \omega, \omega^2, ..., \omega^i], [Q_{R_0}, Q_{R_1}, Q_{R_2}, ..., Q_{R_i}] \rangle$
+- $Q_O(x) = \langle [1, \omega, \omega^2, ..., \omega^i], [Q_{O_0}, Q_{O_1}, Q_{O_2}, ..., Q_{O_i}] \rangle$
+- $Q_M(x) = \langle [1, \omega, \omega^2, ..., \omega^i], [Q_{M_0}, Q_{M_1}, Q_{M_2}, ..., Q_{M_i}] \rangle$
+- $Q_C(x) = \langle [1, \omega, \omega^2, ..., \omega^i], [Q_{C_0}, Q_{C_1}, Q_{C_2}, ..., Q_{C_i}] \rangle$
+
+Y además...
+
+- $a(x) = \langle [1, \omega, \omega^2, ..., \omega^i], [a_0, a_1, a_2, ..., a_i] \rangle$
+- $b(x) = \langle [1, \omega, \omega^2, ..., \omega^i], [b_0, b_1, b_2, ..., b_i] \rangle$
+- $c(x) = \langle [1, \omega, \omega^2, ..., \omega^i], [c_0, c_1, c_2, ..., c_i] \rangle$
+
+
+
+---
+layout: center
+transition: none
+---
+
+# ¡Vamo'!
+
+### Todo es polinomio
