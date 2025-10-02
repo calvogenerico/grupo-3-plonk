@@ -38,7 +38,7 @@
         
       </div>
 
-      <div v-for="(number, colIndex) in traza[rowIndex]" :key="`cell-${rowIndex}-${colIndex}`" class="matrix-cell">
+      <div v-if="traza" v-for="(number, colIndex) in traza[rowIndex]" :key="`cell-${rowIndex}-${colIndex}`" class="matrix-cell">
         {{ number }}
       </div>
 
