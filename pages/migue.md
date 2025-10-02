@@ -135,9 +135,9 @@ factores tau secretos.
 ## Persona 2
 
 - $\tau_2^0 G = G$
-- $\tau_2^1 \Omega_1 = \Alpha_1 = \tau_1^1 \tau_2^1 G$
-- $\tau_2^2 \Omega_2 = \Alpha_2 = \tau_1^2 \tau_2^2 G$
-- $\tau_2^3 \Omega_3 = \Alpha_3 = \tau_1^3 \tau_2^3 G$
+- $\tau_2^1 \Omega_1 = \Upsilon_1 = \tau_1^1 \tau_2^1 G$
+- $\tau_2^2 \Omega_2 = \Upsilon_2 = \tau_1^2 \tau_2^2 G$
+- $\tau_2^3 \Omega_3 = \Upsilon_3 = \tau_1^3 \tau_2^3 G$
 
 
 </v-click>
@@ -149,9 +149,9 @@ factores tau secretos.
 ## Persona 3
 
 - $\tau_3^0 G = G$
-- $\tau_3^1 \Alpha_1 = \Beta_1 = \tau_1^1 \tau_2^1 \tau_3^1 G$
-- $\tau_3^2 \Alpha_2 = \Beta_2 = \tau_1^2 \tau_2^2 \tau_3^2 G$
-- $\tau_3^3 \Alpha_3 = \Beta_3 = \tau_1^3 \tau_2^3 \tau_3^3 G$
+- $\tau_3^1 \Upsilon_1 = \Psi_1 = \tau_1^1 \tau_2^1 \tau_3^1 G$
+- $\tau_3^2 \Upsilon_2 = \Psi_2 = \tau_1^2 \tau_2^2 \tau_3^2 G$
+- $\tau_3^3 \Upsilon_3 = \Psi_3 = \tau_1^3 \tau_2^3 \tau_3^3 G$
 
 </v-click>
 
@@ -160,9 +160,9 @@ factores tau secretos.
 ## Persona n
 
 - $\tau_n^0 G = G$
-- $\tau_n^1 \Beta_1 = \Gamma_1 = \tau_1^1 ... \tau_n^1 G$
-- $\tau_n^2 \Beta_2 = \Gamma_2 = \tau_1^2 ... \tau_n^2 G$
-- $\tau_n^3 \Beta_3 = \Gamma_3 = \tau_1^3 ... \tau_n^3 G$
+- $\tau_n^1 \Psi_1 = \Gamma_1 = \tau_1^1 ... \tau_n^1 G$
+- $\tau_n^2 \Psi_2 = \Gamma_2 = \tau_1^2 ... \tau_n^2 G$
+- $\tau_n^3 \Psi_3 = \Gamma_3 = \tau_1^3 ... \tau_n^3 G$
 
 </v-click>
 
