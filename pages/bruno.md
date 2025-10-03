@@ -1,13 +1,10 @@
 ---
-layout: center
+layout: two-cols
 transition: none
 ---
 
 # Entonces... ¡ya está!
 
-<div class="grid grid-cols-2 gap-8 mt-8">
-
-<div>
 
 ```mermaid {scale: 0.5}
 graph TD
@@ -29,22 +26,14 @@ graph TD
     style Z2 hidden fill:transparent,stroke:transparent,color:transparent,font-size:0,width:0,height:0
 ```
 
-</div>
-<div>
-
-</div>
-
-</div>
+::right::
 
 ---
-layout: center
+layout: two-cols
 ---
 
 # Entonces... ¿ya está?
 
-<div class="grid grid-cols-2 gap-8 mt-8">
-
-<div>
 
 ```mermaid {scale: 0.5}
 graph TD
@@ -66,20 +55,13 @@ graph TD
     style Z2 fill:#ef4444
 ```
 
-</div>
-<div>
 
-<div v-click>
+::right::
 
 (3) $\;\;c_3 = a_3 \times b_3$
 
 (7) $\;\;c_7 = a_7 \times b_7$
 
-</div>
-
-<div v-click>
-
-</div>
 
 Dado $\vec{w} = [w_0, w_1, ..., w_{n-1}]$
 
@@ -87,10 +69,6 @@ Dado $\vec{w} = [w_0, w_1, ..., w_{n-1}]$
 
 - $w_5 = w_{12}$
 - $w_2 = w_3 = w_7$
-
-</div>
-
-</div>
 
 </div>
 
