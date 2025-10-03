@@ -756,6 +756,10 @@ layout: center
 transition: none
 ---
 
-# ¡Vamo'!
-
 ### Todo es polinomio
+
+---
+layout: end
+---
+
+# ¿Preguntas?

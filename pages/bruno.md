@@ -230,13 +230,19 @@ layout: center
 
 <v-click>
 <div class="text-center mt-8 p-4 bg-blue-500/10 rounded text-sm">
-Queremos forzar algunos<br/>$w_i = w_j$
+
+Queremos forzar algunos $w_i = w_j$
+
 </div>
+
+
 </v-click>
 
 <v-click>
 <div class="text-center mt-8 p-4 bg-red-500/10 rounded text-sm">
+
 Construimos permutación σ<br/>(ciclos para cada cable)
+
 </div>
 </v-click>
 
