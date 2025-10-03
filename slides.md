@@ -43,9 +43,3 @@ src: ./pages/ax.md
 ---
 src: ./pages/aylen.md
 ---
-
-
-<!-- Esto lo dejé temporalmente para que queden las instrucciones de como usar slidev. Pero apenas ya mas o menos lo tengamos claro lo podemos boletear. -->
----
-src: ./pages/instructions.md
----
