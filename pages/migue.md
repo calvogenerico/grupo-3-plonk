@@ -105,6 +105,36 @@ transition: slide-left
 
 </v-clicks>
 
+---
+layout: center
+transition: slide-left
+---
+
+
+# Mejor que no saberlo yo es que no lo sepa nadie.
+
+
+---
+layout: fact
+transition: slide-left
+---
+
+$a \in F_p$
+
+$b \in F_p$
+
+$P \in E$
+
+$(a * b) * P = a * (b * P)$
+
+---
+layout: fact
+transition: slide-left
+---
+
+$(a * b) * P = a * (b * P)$
+
+¡Ojito!
 
 ---
 layout: two-cols-header
