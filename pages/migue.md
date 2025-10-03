@@ -6,20 +6,16 @@ transition: none
 
 # Vamos por partes
 
-<v-click>
-
 ### ¿Que es plonk?
 
-</v-click>
-
-<v-clicks>
+<v-click>
 
 - Mas allá de la definición formal, es un método muy piola
     para demostrar cómputo.
 
 - Hay una parte de plonk que es modular (el método para caomprometerse a un polinomio). Pero acá vamos a asumir kzg (la cosa de pairings que nos explicó el chino)
 
-</v-clicks>
+</v-click>
 
 ---
 layout: image-right
@@ -30,9 +26,6 @@ transition: slide-left
 # Vamos por partes
 
 ### Funcionamiento a lo bruto
-
-
-
 
 <v-clicks>
 
@@ -313,7 +306,7 @@ graph TD
     I3 --> D;
 
     C --> E{*};
-    C --> E;
+    D --> E;
 
     E --> F{+};
     D --> F;
@@ -362,7 +355,7 @@ graph TD
     I3 --> D;
 
     C --> E{*};
-    C --> E;
+    D --> E;
 
     E --> F{+};
     D --> F;
@@ -447,7 +440,10 @@ $(Q_{L_i}) a_i + (Q_{R_i}) b_i + (Q_{O_i}) c_i + (Q_{M_i}) a_i b_i + Q_{C_i} = 0
 
 ::left::
 
-$a + b = c$
+```ts
+const c = a + b;
+console.log(c);
+```
 
 ::right::
 
@@ -647,9 +643,11 @@ $(Q_{L_i}) a_i + (Q_{R_i}) b_i + (Q_{O_i}) c_i + (Q_{M_i}) a_i b_i + Q_{C_i} = 0
 ::left::
 
 ````md magic-move {lines: true}
-```rust {*|2|4|6|9}
+```rust {*|3|6|8|5|7|9}
 // Esto es rust muy poco idiomático!
-fn gate(b: bool) -> usize {
+fn gate(
+    b: bool
+) -> usize {
     let res = if b {
         10
     } else {
@@ -670,24 +668,27 @@ fn gate(b: bool) -> usize {
     [0, 0,  -1, 0,  10], // 3
     [0, 0,  -1, 0,  55], // 4
     [0, 0,  -1, 1,  0], //  5
-    [0, 0,  -1, 1,  0], // 6
+    [0, 0,  -1, 0,  -1], // 6
+    [1, 0,  -1, 1,  0], // 1
     [1, 1,  -1, 0,  0] // 7
 ]" :traza="[
-    ['b' , '', 'b1'], // 1
-    ['b1', 'b', '' ], // 2
+    ['i' , '', 'i1'], // 1
+    ['i1', 'i', '' ], // 2
     [''  , '' , 'x1'], // 3
     [''  , '' , 'x2'], // 4
-    ['x1', 'b', 'x3'], // 5
-    ['x2', 'b', 'x4'], // 6
+    ['x1', 'i', 'x3'], // 5
+    ['i', '_', '~i'], // 5
+    ['x2', '~i', 'x4'], // 6
     ['x3', 'x4', 'out'], // 7
 ]" :nombres="[
-    'booleano1',
-    'booleano2',
-    'constante',
-    'constante',
-    'then',
-    'else',
-    'if / then / else'
+    'bool1 -> 3',
+    'bool2 -> 3',
+    'constante -> 6',
+    'constante -> 8',
+    'then -> 5',
+    'else -> 9',
+    'else -> 9',
+    'if / then / else -> 11'
 ]"/>
 
 
@@ -706,24 +707,27 @@ Tenemos una re matriz:
     [0, 0,  -1, 0,  10], // 3
     [0, 0,  -1, 0,  55], // 4
     [0, 0,  -1, 1,  0], //  5
-    [0, 0,  -1, 1,  0], // 6
+    [0, 0,  -1, 0,  -1], // 6
+    [1, 0,  -1, 1,  0], // 1
     [1, 1,  -1, 0,  0] // 7
 ]" :traza="[
-    ['b' , '', 'b1'], // 1
-    ['b1', 'b', '' ], // 2
+    ['i' , '', 'i1'], // 1
+    ['i1', 'i', '' ], // 2
     [''  , '' , 'x1'], // 3
     [''  , '' , 'x2'], // 4
-    ['x1', 'b', 'x3'], // 5
-    ['x2', 'b', 'x4'], // 6
+    ['x1', 'i', 'x3'], // 5
+    ['i', '_', '~i'], // 5
+    ['x2', '~i', 'x4'], // 6
     ['x3', 'x4', 'out'], // 7
 ]" :nombres="[
-    'booleano1',
-    'booleano2',
-    'constante',
-    'constante',
-    'then',
-    'else',
-    'if / then / else'
+    'bool1 -> 3',
+    'bool2 -> 3',
+    'constante -> 6',
+    'constante -> 8',
+    'then -> 5',
+    'else -> 9',
+    'else -> 9',
+    'if / then / else -> 11'
 ]"/>
 
 ---

@@ -48,8 +48,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
-
 // Define the component's props
 defineProps({
   // The matrixData prop is an array and is required
