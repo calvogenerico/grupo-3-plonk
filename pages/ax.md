@@ -23,9 +23,7 @@ f(x) = Z_H(x)t(x) \iff t(x)= \frac{f(x)}{Z_H(x)}
 $$
 y $Z_H(x) = \prod_{h:H}(X-h)$, en base a esto, se puede hacer un protocolo que compruebe Zero Test
 
-> Evaluar $Z_H(x)$ toma $O(log(k))$ siendo $|H| = k$, mediante un Expresion Tree precomputado.
 $$
-
 \boxed{
 	\begin{array}{cc}
         \textbf{Prover} \\
